@@ -3,6 +3,7 @@ package com.spring.jwt_auth.service;
 import com.spring.jwt_auth.config.SecurityConfig;
 import com.spring.jwt_auth.dto.RegisterRequest;
 import com.spring.jwt_auth.entity.User;
+import com.spring.jwt_auth.exception.EmailAlreadyExistsException;
 import com.spring.jwt_auth.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class AuthService {
     public String register(RegisterRequest request){
 
         if(userRepository.existsByEmail(request.getEmail())){
-            throw new RuntimeException("Email Already Exists");
+            throw new EmailAlreadyExistsException("Email Already Exists");
         }
         User user = new User(
                 request.getEmail(),
