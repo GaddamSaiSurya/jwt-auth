@@ -1,5 +1,6 @@
 package com.spring.jwt_auth.controller;
 
+import com.spring.jwt_auth.dto.LoginRequest;
 import com.spring.jwt_auth.dto.RegisterRequest;
 import com.spring.jwt_auth.service.AuthService;
 import jakarta.validation.Valid;
@@ -21,5 +22,12 @@ public class AuthController {
     @PostMapping("/register")
     public String register(@Valid @RequestBody RegisterRequest request){
         return authService.register(request);
+    }
+
+    @PostMapping("/login")
+    public String login(
+            @Valid @RequestBody LoginRequest loginRequest
+            ){
+        return authService.login(loginRequest);
     }
 }
