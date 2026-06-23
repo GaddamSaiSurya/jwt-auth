@@ -24,10 +24,10 @@ public class AuthController {
         return authService.register(request);
     }
 
-    @PostMapping("/login")
-    public String login(
-            @Valid @RequestBody LoginRequest loginRequest
-            ){
-        return authService.login(loginRequest);
-    }
+//    @PostMapping("/login")
+//    public String login(
+//            @Valid @RequestBody LoginRequest loginRequest
+//            ){
+//        return authService.login(loginRequest);
+//    }
 }

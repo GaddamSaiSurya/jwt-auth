@@ -1,10 +1,15 @@
 package com.spring.jwt_auth.service;
 
 import com.spring.jwt_auth.config.SecurityConfig;
+import com.spring.jwt_auth.dto.LoginRequest;
+import com.spring.jwt_auth.dto.LoginResponse;
 import com.spring.jwt_auth.dto.RegisterRequest;
 import com.spring.jwt_auth.entity.User;
 import com.spring.jwt_auth.exception.EmailAlreadyExistsException;
 import com.spring.jwt_auth.repository.UserRepository;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +20,15 @@ public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    private final AuthenticationManager authenticationManager;
+
+    private final JwtService jwtService;
+
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
     public String register(RegisterRequest request){
@@ -32,5 +43,18 @@ public class AuthService {
         );
         userRepository.save(user);
         return "Registered Successfully!";
+    }
+
+    public LoginResponse login(LoginRequest request){
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+
+        User user = (User) authentication.getPrincipal();
+        String token = jwtService.generateToken(user);
+        return new LoginResponse(token);
     }
 }
