@@ -1,12 +1,12 @@
 package com.spring.jwt_auth.service;
 
-import com.spring.jwt_auth.config.SecurityConfig;
 import com.spring.jwt_auth.dto.LoginRequest;
 import com.spring.jwt_auth.dto.LoginResponse;
 import com.spring.jwt_auth.dto.RegisterRequest;
 import com.spring.jwt_auth.entity.User;
 import com.spring.jwt_auth.exception.EmailAlreadyExistsException;
 import com.spring.jwt_auth.repository.UserRepository;
+import com.spring.jwt_auth.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
