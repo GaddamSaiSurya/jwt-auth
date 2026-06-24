@@ -39,7 +39,7 @@ public class AuthService {
         User user = new User(
                 request.getEmail(),
                 passwordEncoder.encode(request.getPassword()),
-                "USER"
+                "ROLE_USER"
         );
         userRepository.save(user);
         return "Registered Successfully!";
