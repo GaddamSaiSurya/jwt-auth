@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  postgres-db:
+    image: postgres:17
+    container_name: postgres-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - backend-network
+
+  jwt-auth:
+    build: .
+    container_name: jwt-auth-app
+    restart: unless-stopped
+    depends_on:
+      - postgres-db
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8080:8080"
+    networks:
+      - backend-network
+
+volumes:
+  postgres-data:
+
+networks:
+  backend-network:
