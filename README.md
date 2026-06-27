@@ -16,6 +16,7 @@ A production-style JWT Authentication API built using Spring Boot 3, Spring Secu
 - Request Validation
 - Layered Architecture
 - PostgreSQL Integration
+- Dockerized Application
 
 ## Tech Stack
 
@@ -27,6 +28,16 @@ A production-style JWT Authentication API built using Spring Boot 3, Spring Secu
 - JWT (JJWT)
 - Maven
 - IntelliJ IDEA
+- Docker
+- Docker Compose
+
+## Run Locally
+
+mvn spring-boot:run
+
+## Run with Docker
+
+docker compose up --build
 
 ## Project Structure
 
